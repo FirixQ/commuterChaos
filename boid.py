@@ -52,13 +52,6 @@ def rule1(allboids, thisboid):
 
     return vectordiv(vectorsub(totalpos, thisboid.position),100)
 
-def rule2(allboids, thisboid): # personal space rule
-    c = [0,0]
-    for boid in allboids:
-        if boid != thisboid:
-            if vectormag(vectorsub(boid.position, thisboid.position)) < 5:
-                c = vectorsub(c, vectorsub(boid.position, thisboid.position))
-    return c
 # but not too close
 def rule2(allboids, thisboid):
     c = [0,0]
