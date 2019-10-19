@@ -57,4 +57,4 @@ while True:#
             pygame.quit()
             sys.exit()
     pygame.display.update()
-    pygame.time.Clock().tick(1)
+    pygame.time.Clock().tick(60)

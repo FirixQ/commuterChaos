@@ -45,7 +45,7 @@ def rule2(allboids, thisboid):
     c = [0,0]
     for boid in allboids:
         if boid != thisboid:
-            if vectormag(vectorsub(boid.position, thisboid.position)) < 100:
+            if vectormag(vectorsub(boid.position, thisboid.position)) < 2:
                 c = vectorsub(c, vectorsub(boid.position, thisboid.position))
     return c
 
@@ -56,7 +56,7 @@ def rule3(allboids, thisboid):
         if boid != thisboid:
             totalv = vectoradd(totalv, boid.velocity)
     totalv = vectordiv(totalv, len(allboids)-1)
-    return vectordiv(vectorsub(totalv, thisboid.velocity), 8) 
+    return vectordiv(vectorsub(totalv, thisboid.velocity), 8)
 
 def speedlimit(boidvelocity):#this takes the velocity vector and returns it limited to a certain magnitude
     vlim = 10 #this is the speed limit
