@@ -4,22 +4,25 @@ def moveallboids(allboids):
 
     target = [400,400]
 
-    for boid in allboids:
-        v1 = rule1(allboids, boid)
-        v2 = rule2(allboids, boid)
-        v3 = rule3(allboids, boid)
-        v4 = rule4(target, boid)
+    for boid in allboids: 
+        vFlock = flock(allboids, boid)
+        vSpace = personalSpace(allboids, boid)
+        vSpeed = matchSpeed(allboids, boid)
+        vConverge = converge(target, boid)
         vBound = boundry(boid)
 
-        boidVelocity = vectorbigadd(boid.velocity , v1, v2, v3, v4, vBound)
+        boidVelocity = vectoradd(boid.velocity , vFlock, vSpace, vSpeed, vConverge, vBound)
         boidVelocity = speedlimit(boidVelocity)
         boidPosition = vectoradd(boid.position,boid.velocity)
         boid.update(boidPosition,boidVelocity)
 
 
 
-def vectoradd(v1, v2): #ronseal
-    return (v1[0]+v2[0],v1[1]+v2[1])
+def vectoradd(*argv): #ronseal
+    outv = [0,0] #adds an unlimited number of vectors together
+    for arg in argv:
+        outv = (outv[0]+arg[0],outv[1]+arg[1])
+    return outv
 
 def vectorsub(v1, v2): #ronseal
     return (v1[0]-v2[0],v1[1]-v2[1])
@@ -33,15 +36,10 @@ def vectordiv(v, s): #ronseal
 def vectormag(v1): # find the magnitude of the vector
     return (sqrt(v1[0]**2 + v1[1]**2))
 
-def vectorbigadd(*argv):
-    outv = [0,0]
-    for arg in argv:
-        outv = vectoradd(outv, arg)
-    return outv
 
 
-# flock together
-def rule1(allboids, thisboid):
+# flock together, boid rule1
+def flock(allboids, thisboid):
     totalpos = [0,0]
 
     for boid in allboids:
@@ -52,8 +50,8 @@ def rule1(allboids, thisboid):
 
     return vectordiv(vectorsub(totalpos, thisboid.position),100)
 
-# but not too close
-def rule2(allboids, thisboid):
+# but not too close, boid rule2
+def personalSpace(allboids, thisboid):
     c = [0,0]
     for boid in allboids:
         if boid != thisboid:
@@ -61,8 +59,8 @@ def rule2(allboids, thisboid):
                 c = vectorsub(c, vectorsub(boid.position, thisboid.position))
     return c
 
-# match nearby bird speed
-def rule3(allboids, thisboid):
+# match nearby bird speed, boid rule3
+def matchSpeed(allboids, thisboid):
 
     totalv = [0,0]
     for boid in allboids:
@@ -71,8 +69,9 @@ def rule3(allboids, thisboid):
     totalv = vectordiv(totalv, len(allboids)-1)
     return vectordiv(vectorsub(totalv, thisboid.velocity), 8)
 
-def rule4(target, thisboid): # tend to place rule
+def converge(target, thisboid): # tend to place rule
     return vectordiv(vectorsub(target, thisboid.position),100)
+
 
 def speedlimit(boidvelocity):#this takes the velocity vector and returns it limited to a certain magnitude
     vlim = 10 #this is the speed limit
