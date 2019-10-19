@@ -52,4 +52,4 @@ def rule3(allboids, thisboid):
         if boid != thisboid:
             totalv = vectoradd(totalv, boid.velocity)
     totalv = vectordiv(totalv, len(allboids)-1)
-    return vectordiv(vectorsub(totalv, thisboid.velocity), 8)
+    return vectordiv(vectorsub(totalv, thisboid.velocity), 8) #cc
