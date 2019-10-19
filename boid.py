@@ -1,7 +1,6 @@
 from math import sqrt
 
 def moveallboids(allboids):
-    
 
     for boid in allboids:
         v1 = rule1(allboids, boid)

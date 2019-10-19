@@ -18,20 +18,6 @@ class Boid():
     def destroy(self):
         pygame.draw.circle(DISPLAYSURF, WHITE, self.position, 3)
 
-def addVectors(v1, v2):
-    return (v1[0]+v2[0],v1[1]+v2[1])
-
-def subVectors(v1, v2):
-    return (v1[0]-v2[0],v1[1]-v2[1])
-
-def mulVector(v, s):
-    return (v[0]*s,v[1]*s)
-
-def divVector(v, s):
-    return (v[0]/s,v[1]/s)
-
-
-
 pygame.init()
 size = width, height = 500,500
 DISPLAYSURF = pygame.display.set_mode(size)
