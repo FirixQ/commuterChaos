@@ -24,11 +24,11 @@ def addVectors(v1, v2):
 def subVectors(v1, v2):
     return (v1[0]-v2[0],v1[1]-v2[1])
 
-def mulVectors(v1,v2):
-    return (v1[0]*v2[0],v1[1]*v2[1])
+def mulVector(v, s):
+    return (v1[0]*s,v1[1]*s)
 
-def divVectors(v1, v2):
-    return (v1[0]/v2[0],v1[1]/v2[1])
+def divVector(v, s):
+    return (v1[0]/s,v1[1]/s)
 
 
 
