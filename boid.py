@@ -10,7 +10,7 @@ def moveallboids(allboids):
         v3 = rule3(allboids, boid)
         v4 = rule4(target, boid)
 
-        boidVelocity = vectoradd(vectoradd(boid.velocity , v1),vectoradd(v2, v3))
+        boidVelocity = vectorbigadd(boid.velocity , v1, v2, v3, v4)
         boidVelocity = speedlimit(boidVelocity)
         boidPosition = vectoradd(boid.position,boid.velocity)
         boid.update(boidPosition,boidVelocity)
@@ -31,7 +31,11 @@ def vectordiv(v, s): #ronseal
 def vectormag(v1): # find the magnitude of the vector
     return (sqrt(v1[0]**2 + v1[0]**2))
 
-def vectorbigadd(v1, ):
+def vectorbigadd(*argv):
+    outv = [0,0]
+    for arg in argv:
+        outv = vectoradd(outv, arg)
+    return outv
 
 
 def rule1(allboids, thisboid): # find friends rule
