@@ -2,10 +2,13 @@ from math import sqrt,ceil
 
 def moveallboids(allboids):
 
+    target = [400,400]
+
     for boid in allboids:
         v1 = rule1(allboids, boid)
         v2 = rule2(allboids, boid)
         v3 = rule3(allboids, boid)
+        v4 = rule4(target, boid)
 
         boidVelocity = vectoradd(vectoradd(boid.velocity , v1),vectoradd(v2, v3))
         boidVelocity = speedlimit(boidVelocity)
@@ -28,6 +31,9 @@ def vectordiv(v, s): #ronseal
 def vectormag(v1): # find the magnitude of the vector
     return (sqrt(v1[0]**2 + v1[0]**2))
 
+def vectorbigadd(v1, ):
+
+
 def rule1(allboids, thisboid): # find friends rule
     
     totalpos = [0,0]
@@ -45,7 +51,7 @@ def rule2(allboids, thisboid): # personal space rule
     c = [0,0]
     for boid in allboids:
         if boid != thisboid:
-            if vectormag(vectorsub(boid.position, thisboid.position)) < 2:
+            if vectormag(vectorsub(boid.position, thisboid.position)) < 5:
                 c = vectorsub(c, vectorsub(boid.position, thisboid.position))
     return c
 
@@ -58,6 +64,8 @@ def rule3(allboids, thisboid): # match velocity rule
     totalv = vectordiv(totalv, len(allboids)-1)
     return vectordiv(vectorsub(totalv, thisboid.velocity), 8) 
 
+def rule4(target, thisboid): # tend to place rule
+    return vectordiv(vectorsub(target, thisboid.position),100)
 
 def speedlimit(boidvelocity):#this takes the velocity vector and returns it limited to a certain magnitude
     vlim = 10 #this is the speed limit
