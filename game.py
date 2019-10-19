@@ -25,10 +25,10 @@ def subVectors(v1, v2):
     return (v1[0]-v2[0],v1[1]-v2[1])
 
 def mulVector(v, s):
-    return (v1[0]*s,v1[1]*s)
+    return (v[0]*s,v[1]*s)
 
 def divVector(v, s):
-    return (v1[0]/s,v1[1]/s)
+    return (v[0]/s,v[1]/s)
 
 
 
