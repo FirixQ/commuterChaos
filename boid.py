@@ -1,4 +1,4 @@
-from math import sqrt
+from math import sqrt,ceil
 
 def moveallboids(allboids):
 
@@ -7,8 +7,9 @@ def moveallboids(allboids):
         v2 = rule2(allboids, boid)
         v3 = rule3(allboids, boid)
 
-        boid.velocity = vectoradd(vectoradd(boid.Velocity , v1),vectoradd(v2, v3))
-        boid.position = boid.position + boid.velocity
+        boidVelocity = vectoradd(vectoradd(boid.velocity , v1),vectoradd(v2, v3))
+        boidPosition = vectoradd(boid.position,boid.velocity)
+        boid.update(boidPosition,boidVelocity)
 
 
 def vectoradd(v1, v2): #ronseal
@@ -42,7 +43,7 @@ def rule2(allboids, thisboid):
     c = [0,0]
     for boid in allboids:
         if boid != thisboid:
-            if vectormag(vectorsub(boid.position, thisboid.postition)) < 100:
+            if vectormag(vectorsub(boid.position, thisboid.position)) < 100:
                 c = vectorsub(c, vectorsub(boid.position, thisboid.position))
     return c
 

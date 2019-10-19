@@ -1,5 +1,6 @@
 import pygame, sys
 from pygame.locals import *
+import boid
 
 # create boids
 class Boid():
@@ -12,8 +13,15 @@ class Boid():
         self.oldVelocity = self.velocity
         self.position = newPosition
         self.velocity = newVelocity
-        pygame.draw.circle(DISPLAYSURF, WHITE, self.oldPosition, 3)
-        pygame.draw.circle(DISPLAYSURF, RED, self.position, 3)
+
+        x,y = self.oldPosition
+        oldPos = int(x), int(y)
+
+        x,y = self.position
+        pos = int(x), int(y)
+
+        pygame.draw.circle(DISPLAYSURF, WHITE, oldPos, 3)
+        pygame.draw.circle(DISPLAYSURF, RED, pos, 3)
 
     def destroy(self):
         pygame.draw.circle(DISPLAYSURF, WHITE, self.position, 3)
@@ -38,7 +46,11 @@ buildings = [(i,j,blockSize,blockSize) for i in range(spacing,width,blockSize+sp
 for building in buildings:
     pygame.draw.rect(DISPLAYSURF,BLACK,building)
 
-while True:
+# create a bunch of boids
+boids = [Boid((25,25),(0,0)) for i in range(50)]
+
+while True:#
+    boid.moveallboids(boids)
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
