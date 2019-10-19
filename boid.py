@@ -8,6 +8,7 @@ def moveallboids(allboids):
         v3 = rule3(allboids, boid)
 
         boidVelocity = vectoradd(vectoradd(boid.velocity , v1),vectoradd(v2, v3))
+        boidVelocity = speedlimit(boidVelocity)
         boidPosition = vectoradd(boid.position,boid.velocity)
         boid.update(boidPosition,boidVelocity)
 
@@ -53,4 +54,11 @@ def rule3(allboids, thisboid):
         if boid != thisboid:
             totalv = vectoradd(totalv, boid.velocity)
     totalv = vectordiv(totalv, len(allboids)-1)
-    return vectordiv(vectorsub(totalv, thisboid.velocity), 8) #cc
+    return vectordiv(vectorsub(totalv, thisboid.velocity), 8) 
+
+def speedlimit(boidvelocity):#this takes the velocity vector and returns it limited to a certain magnitude
+    vlim = 10 #this is the speed limit
+    if vectormag(boidvelocity) > vlim:
+        return vectordiv(boidvelocity,vectormag(boidvelocity))*vlim
+    else:
+        return boidvelocity
