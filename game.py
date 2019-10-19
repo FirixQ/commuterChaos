@@ -1,6 +1,6 @@
 import pygame, sys
 from pygame.locals import *
-import boid
+import boid as rules
 
 # create boids
 class Boid():
@@ -50,7 +50,7 @@ for building in buildings:
 boids = [Boid((25,25),(0,0)) for i in range(50)]
 
 while True:#
-    boid.moveallboids(boids)
+    rules.moveallboids(boids)
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
