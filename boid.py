@@ -11,6 +11,7 @@ def moveallboids(allboids):
         v4 = rule4(target, boid)
         vBound = boundry(boid)
 
+        boidVelocity = vectorbigadd(boid.velocity , v1, v2, v3, v4, vBound)
         boidVelocity = speedlimit(boidVelocity)
         boidPosition = vectoradd(boid.position,boid.velocity)
         boid.update(boidPosition,boidVelocity)
@@ -87,11 +88,22 @@ def speedlimit(boidvelocity):#this takes the velocity vector and returns it limi
     else:
         return boidvelocity
 
-def tendtoplace(b, pos):
-    return vectordiv(vectorsub(pos,b),10)
+def boundry(boid):
+    # bounds
+    minX = 0
+    maxX = 500
+    minY = 0
+    maxY = 500
 
-def tendfromplace(b,pos):
-    return(vectormul(tendtoplace(b,pos),-0.1))
+    # constants
+    const = 1
+
+    resultant = [0,0]
+
+    if boid.position[0] < minX:
+        resultant[0] = const
+    elif boid.position[0] > maxX:
+        resultant[0] = const * -1
 
     if boid.position[1] < minY:
         resultant[1] = const
