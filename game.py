@@ -47,7 +47,7 @@ for building in buildings:
     pygame.draw.rect(DISPLAYSURF,BLACK,building)
 
 # create a bunch of boids
-boids = [Boid((100+i*10,100+j*10),(0,0)) for i in range(5) for j in range(5)]
+boids = [Boid((100+i*10,100+j*10),(0,0)) for i in range(7) for j in range(7)]
 # boids = [Boid((250,250),(0,0)), Boid((250,255),(0,0))]
 
 while True:#
@@ -57,4 +57,4 @@ while True:#
             pygame.quit()
             sys.exit()
     pygame.display.update()
-#    pygame.time.Clock().tick(60)
+    pygame.time.Clock().tick(60)

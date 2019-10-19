@@ -9,12 +9,12 @@ def moveallboids(allboids):
         v2 = rule2(allboids, boid)
         v3 = rule3(allboids, boid)
         v4 = rule4(target, boid)
+        vBound = boundry(boid)
 
-        boidVelocity = vectorbigadd(boid.velocity , v1, v2, v3, v4)
         boidVelocity = speedlimit(boidVelocity)
-        boidPosition = vectoradd(vectoradd(vectoradd(tendfromplace(boid.position,[100,100]),tendtoplace(boid.position,[400,400])),boid.position),boid.velocity)
+        boidPosition = vectoradd(boid.position,boid.velocity)
         boid.update(boidPosition,boidVelocity)
-        
+
 
 
 def vectoradd(v1, v2): #ronseal
@@ -37,7 +37,7 @@ def vectorbigadd(*argv):
     for arg in argv:
         outv = vectoradd(outv, arg)
     return outv
-    
+
 
 # flock together
 def rule1(allboids, thisboid):
@@ -63,7 +63,7 @@ def rule2(allboids, thisboid):
     c = [0,0]
     for boid in allboids:
         if boid != thisboid:
-            if vectormag(vectorsub(boid.position, thisboid.position)) < 3:
+            if vectormag(vectorsub(boid.position, thisboid.position)) < 5:
                 c = vectorsub(c, vectorsub(boid.position, thisboid.position))
     return c
 
@@ -93,4 +93,9 @@ def tendtoplace(b, pos):
 def tendfromplace(b,pos):
     return(vectormul(tendtoplace(b,pos),-0.1))
 
+    if boid.position[1] < minY:
+        resultant[1] = const
+    elif boid.position[1] > maxY:
+        resultant[1] = const * -1
 
+    return resultant
