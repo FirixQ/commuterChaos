@@ -2,12 +2,15 @@ from math import sqrt,ceil
 
 def moveallboids(allboids):
 
+    target = [400,400]
+
     for boid in allboids:
         v1 = rule1(allboids, boid)
         v2 = rule2(allboids, boid)
         v3 = rule3(allboids, boid)
+        v4 = rule4(target, boid)
 
-        boidVelocity = vectoradd(vectoradd(boid.velocity , v1),vectoradd(v2, v3))
+        boidVelocity = vectorbigadd(boid.velocity , v1, v2, v3, v4)
         boidVelocity = speedlimit(boidVelocity)
         boidPosition = vectoradd(vectoradd(vectoradd(tendfromplace(boid.position,[100,100]),tendtoplace(boid.position,[400,400])),boid.position),boid.velocity)
         boid.update(boidPosition,boidVelocity)
@@ -29,6 +32,13 @@ def vectordiv(v, s): #ronseal
 def vectormag(v1): # find the magnitude of the vector
     return (sqrt(v1[0]**2 + v1[1]**2))
 
+def vectorbigadd(*argv):
+    outv = [0,0]
+    for arg in argv:
+        outv = vectoradd(outv, arg)
+    return outv
+    
+
 # flock together
 def rule1(allboids, thisboid):
     totalpos = [0,0]
@@ -41,6 +51,13 @@ def rule1(allboids, thisboid):
 
     return vectordiv(vectorsub(totalpos, thisboid.position),100)
 
+def rule2(allboids, thisboid): # personal space rule
+    c = [0,0]
+    for boid in allboids:
+        if boid != thisboid:
+            if vectormag(vectorsub(boid.position, thisboid.position)) < 5:
+                c = vectorsub(c, vectorsub(boid.position, thisboid.position))
+    return c
 # but not too close
 def rule2(allboids, thisboid):
     c = [0,0]
@@ -52,12 +69,16 @@ def rule2(allboids, thisboid):
 
 # match nearby bird speed
 def rule3(allboids, thisboid):
+
     totalv = [0,0]
     for boid in allboids:
         if boid != thisboid:
             totalv = vectoradd(totalv, boid.velocity)
     totalv = vectordiv(totalv, len(allboids)-1)
     return vectordiv(vectorsub(totalv, thisboid.velocity), 8)
+
+def rule4(target, thisboid): # tend to place rule
+    return vectordiv(vectorsub(target, thisboid.position),100)
 
 def speedlimit(boidvelocity):#this takes the velocity vector and returns it limited to a certain magnitude
     vlim = 10 #this is the speed limit
