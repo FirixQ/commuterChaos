@@ -25,8 +25,9 @@ def vectordiv(v, s): #ronseal
     return (v[0]/s,v[1]/s)
 
 def vectormag(v1): # find the magnitude of the vector
-    return (sqrt(v1[0]**2 + v1[0]**2))
+    return (sqrt(v1[0]**2 + v1[1]**2))
 
+# flock together
 def rule1(allboids, thisboid):
     totalpos = [0,0]
 
@@ -38,7 +39,7 @@ def rule1(allboids, thisboid):
 
     return vectordiv(vectorsub(totalpos, thisboid.position),100)
 
-
+# but not too close
 def rule2(allboids, thisboid):
     c = [0,0]
     for boid in allboids:
@@ -47,6 +48,7 @@ def rule2(allboids, thisboid):
                 c = vectorsub(c, vectorsub(boid.position, thisboid.position))
     return c
 
+# match nearby bird speed
 def rule3(allboids, thisboid):
     totalv = [0,0]
     for boid in allboids:
