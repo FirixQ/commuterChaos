@@ -28,7 +28,8 @@ def vectordiv(v, s): #ronseal
 def vectormag(v1): # find the magnitude of the vector
     return (sqrt(v1[0]**2 + v1[0]**2))
 
-def rule1(allboids, thisboid):
+def rule1(allboids, thisboid): # find friends rule
+    
     totalpos = [0,0]
 
     for boid in allboids:
@@ -40,21 +41,23 @@ def rule1(allboids, thisboid):
     return vectordiv(vectorsub(totalpos, thisboid.position),100)
 
 
-def rule2(allboids, thisboid):
+def rule2(allboids, thisboid): # personal space rule
     c = [0,0]
     for boid in allboids:
         if boid != thisboid:
-            if vectormag(vectorsub(boid.position, thisboid.position)) < 100:
+            if vectormag(vectorsub(boid.position, thisboid.position)) < 2:
                 c = vectorsub(c, vectorsub(boid.position, thisboid.position))
     return c
 
-def rule3(allboids, thisboid):
+
+def rule3(allboids, thisboid): # match velocity rule
     totalv = [0,0]
     for boid in allboids:
         if boid != thisboid:
             totalv = vectoradd(totalv, boid.velocity)
     totalv = vectordiv(totalv, len(allboids)-1)
     return vectordiv(vectorsub(totalv, thisboid.velocity), 8) 
+
 
 def speedlimit(boidvelocity):#this takes the velocity vector and returns it limited to a certain magnitude
     vlim = 10 #this is the speed limit
