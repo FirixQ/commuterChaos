@@ -56,6 +56,8 @@ for building in buildings:
 
 boids = [Boid((120,25),(0,0)) for i in range(5)]
 
+pygame.mixer.init()
+HONK = pygame.mixer.Sound("honk.ogg")
 
 while True:
     if mousecounter > 0:
@@ -72,6 +74,9 @@ while True:
             mouseposin= list(event.pos)
             rules.moveallboids(boids,map,mousepos=mouseposin)
             mousecounter = 15
+        elif event.type == KEYDOWN:
+            if event.unicode == 'y':
+                pygame.mixer.Sound.play(HONK)
 
     pygame.display.update()
     pygame.time.Clock().tick(60)#set the fps
