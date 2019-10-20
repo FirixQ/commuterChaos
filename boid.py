@@ -3,7 +3,7 @@ from math import sqrt
 # constants
 target = [400,400]
 attractionToGoal = 100 # 1/n
-speedLim = 2
+speedLim = 6
 
 def moveallboids(allboids, map, mousepos = (-1,-1)):
 
