@@ -37,8 +37,6 @@ WHITE = (255,255,255)
 BLACK = (0,0,0)
 RED   = (255,0,0)
 
-mousecounter = 0 # track how many frames it's been since the last mouse click
-
 # create a city layout with block size of 100, spacing of 50
 blockSize = 100
 spacing = 50
@@ -52,21 +50,11 @@ for building in buildings:
 boids = [Boid((100+i*10,100+j*10),(0,0)) for i in range(7) for j in range(7)]
 # boids = [Boid((250,250),(0,0)), Boid((250,255),(0,0))]
 
-while True:
-    if mousecounter > 0:
-        mousecounter -=1
-        rules.moveallboids(boids,buildings,mousepos=mouseposin)
-    else:
-        rules.moveallboids(boids,buildings)
-    
+while True:#
+    rules.moveallboids(boids)
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
-        elif event.type == MOUSEBUTTONUP:
-            mouseposin= list(event.pos)
-            rules.moveallboids(boids,buildings,mousepos=mouseposin)
-            mousecounter = 15
-            
     pygame.display.update()
     pygame.time.Clock().tick(60)
