@@ -23,7 +23,7 @@ class Boid():
         pygame.draw.circle(DISPLAYSURF, WHITE, oldPos, 3)
         pygame.draw.circle(DISPLAYSURF, RED, pos, 3)
 
-    def destroy(self):
+    def destroy(self): 
         pygame.draw.circle(DISPLAYSURF, WHITE, self.position, 3)
 
 pygame.init()
@@ -53,7 +53,9 @@ for building in buildings:
 # create a bunch of boids
 # boids = [Boid((100+i*10,100+j*10),(0,0)) for i in range(7) for j in range(7)]
 # boids = [Boid((250,250),(0,0)), Boid((250,255),(0,0))]
+
 boids = [Boid((120,25),(0,0)) for i in range(5)]
+
 
 while True:
     if mousecounter > 0:
@@ -68,8 +70,8 @@ while True:
             sys.exit()
         elif event.type == MOUSEBUTTONUP:
             mouseposin= list(event.pos)
-            rules.moveallboids(boids,buildings,mousepos=mouseposin)
+            rules.moveallboids(boids,map,mousepos=mouseposin)
             mousecounter = 15
 
     pygame.display.update()
-    pygame.time.Clock().tick(60)
+    pygame.time.Clock().tick(60)#set the fps
