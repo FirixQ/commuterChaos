@@ -124,13 +124,18 @@ def collision(boid, map, velo):
     vX = velo[1]
 
     for building in map:
-        if (x+3 >= building.left and x-3 <= building.right) and (y+3 >= building.top and y-3 <= building.bottom):
+        if (x+10 >= building.left and x-10 <= building.right) and (y+3 >= building.top and y-3 <= building.bottom):
             vX *= -1
             # boid.position = (building.left - 3, y)
+            return(vX,vY)
 
-        if (y+3 >= building.top and y-3 <= building.bottom) and (x+3 >= building.left and x-3 <= building.right):
+        if (y+10 >= building.top and y-10 <= building.bottom) and (x+3 >= building.left and x-3 <= building.right):
             vY *= -1
             # boid.position = (x, building.top + 3)
+            return(vX, vY)
+        
+
+        
     return (vX,vY)
 
 def scatter(allboids,thisboid):

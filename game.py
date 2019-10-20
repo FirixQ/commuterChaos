@@ -68,7 +68,7 @@ while True:
             sys.exit()
         elif event.type == MOUSEBUTTONUP:
             mouseposin= list(event.pos)
-            rules.moveallboids(boids,buildings,mousepos=mouseposin)
+            rules.moveallboids(boids,map,mousepos=mouseposin)
             mousecounter = 15
 
     pygame.display.update()
