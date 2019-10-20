@@ -1,8 +1,9 @@
-from math import sqrt,ceil
+from math import sqrt
 
-def moveallboids(allboids):
+def moveallboids(allboids,buildings, mousepos = (-1,-1)):
 
     target = [400,400]
+
 
     for boid in allboids: 
         vFlock = flock(allboids, boid)
@@ -11,7 +12,12 @@ def moveallboids(allboids):
         vConverge = converge(target, boid)
         vBound = boundry(boid)
 
-        boidVelocity = vectoradd(boid.velocity , vFlock, vSpace, vSpeed, vConverge, vBound)
+        if mousepos != (-1,-1):
+            vMouse = mouseScatter(mousepos,boid,allboids)
+        else:
+            vMouse = [0,0]
+
+        boidVelocity = vectoradd(boid.velocity , vFlock, vSpace, vSpeed, vConverge, vBound,vMouse)
         boidVelocity = speedlimit(boidVelocity)
         boidPosition = vectoradd(boid.position,boid.velocity)
         boid.update(boidPosition,boidVelocity)
@@ -70,7 +76,7 @@ def matchSpeed(allboids, thisboid):
     return vectordiv(vectorsub(totalv, thisboid.velocity), 8)
 
 def converge(target, thisboid): # tend to place rule
-    return vectordiv(vectorsub(target, thisboid.position),100)
+    return vectordiv(vectorsub(target, thisboid.position),50)
 
 
 def speedlimit(boidvelocity):#this takes the velocity vector and returns it limited to a certain magnitude
@@ -103,3 +109,18 @@ def boundry(boid):
         resultant[1] = const * -1
 
     return resultant
+
+
+def scatter(allboids,thisboid):
+    pushawaymul = -2
+    return (0,0) #vectormul(flock(allboids,thisboid),2*pushawaymul)
+
+
+def avoid(target,thisboid):
+    pushawaymul = -0.75
+    return vectormul(converge(target,thisboid),pushawaymul)
+
+
+
+def mouseScatter(mousepos, thisboid,allboids):
+    return(vectoradd(scatter(allboids,thisboid),avoid(mousepos,thisboid)))
