@@ -23,9 +23,6 @@ class Boid():
         pygame.draw.circle(DISPLAYSURF, WHITE, oldPos, 3)
         pygame.draw.circle(DISPLAYSURF, RED, pos, 3)
 
-    def destroy(self): 
-        pygame.draw.circle(DISPLAYSURF, WHITE, self.position, 3)
-
 pygame.init()
 size = width, height = 500,500
 DISPLAYSURF = pygame.display.set_mode(size)
