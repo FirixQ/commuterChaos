@@ -72,4 +72,4 @@ while True:
             mousecounter = 15
 
     pygame.display.update()
-    pygame.time.Clock().tick(1)
+    pygame.time.Clock().tick(60)

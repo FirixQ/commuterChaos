@@ -1,8 +1,11 @@
 from math import sqrt
 
-def moveallboids(allboids, map, mousepos = (-1,-1)):
+# constants
+target = [400,400]
+attractionToGoal = 100 # 1/n
+speedLim = 5
 
-    target = [400,400]
+def moveallboids(allboids, map, mousepos = (-1,-1)):
 
     for boid in allboids:
         vFlock = flock(allboids, boid)
@@ -16,10 +19,10 @@ def moveallboids(allboids, map, mousepos = (-1,-1)):
         else:
             vMouse = [0,0]
 
-        boidVelocity = vectoradd(boid.velocity , vFlock, vSpace, vSpeed, vConverge, vBound,vMouse)
+        boidVelocity = vectoradd(boid.velocity , vFlock, vSpace, vSpeed, vConverge, vBound, vMouse)
         boidVelocity = speedlimit(boidVelocity)
-        boidVelocity = collision(boid, map, boidVelocity)
         boidPosition = vectoradd(boid.position,boid.velocity)
+        boidVelocity = collision(boid, map, boidVelocity)
         boid.update(boidPosition,boidVelocity)
 
 
@@ -76,11 +79,11 @@ def matchSpeed(allboids, thisboid):
     return vectordiv(vectorsub(totalv, thisboid.velocity), 8)
 
 def converge(target, thisboid): # tend to place rule
-    return vectordiv(vectorsub(target, thisboid.position),50)
+    return vectordiv(vectorsub(target, thisboid.position),attractionToGoal)
 
 
 def speedlimit(boidvelocity):#this takes the velocity vector and returns it limited to a certain magnitude
-    vlim = 20 #this is the speed limit
+    vlim = speedLim #this is the speed limit
     if vectormag(boidvelocity) > vlim:
         return vectordiv(boidvelocity,vectormag(boidvelocity))*vlim
     else:
@@ -114,9 +117,6 @@ def boundry(boid):
 
 def collision(boid, map, velo):
 
-    # honestly idk what is going here. it is teleporting stuff about and i dont
-    # know why
-
     x = boid.position[0]
     y = boid.position[1]
 
@@ -126,17 +126,17 @@ def collision(boid, map, velo):
     for building in map:
         if x >= building.left and (y >= building.top and y <= building.bottom):
             vX *= -1
-            boid.position = (building.left - 3, y)
+            # boid.position = (building.left - 3, y)
         if x <= building.right and (y >= building.top and y <= building.bottom):
             vX *= -1
-            boid.position = (building.right + 3, y)
+            # boid.position = (building.right + 3, y)
 
         if y >= building.top and (x >= building.left and x <= building.right):
             vY *= -1
-            boid.position = (x, building.top + 3)
+            # boid.position = (x, building.top + 3)
         if y <= building.bottom and (x >= building.left and x <= building.right):
             vY *= -1
-            boid.position = (x, building.bottom - 3)
+            # boid.position = (x, building.bottom - 3)
 
     return (vX,vY)
 
