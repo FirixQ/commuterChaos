@@ -53,7 +53,9 @@ for building in buildings:
 # create a bunch of boids
 # boids = [Boid((100+i*10,100+j*10),(0,0)) for i in range(7) for j in range(7)]
 # boids = [Boid((250,250),(0,0)), Boid((250,255),(0,0))]
-boids = [Boid((40,25),(0,0)) for i in range(25)]
+
+boids = [Boid((120,25),(0,0)) for i in range(5)]
+
 
 while True:
     if mousecounter > 0:
