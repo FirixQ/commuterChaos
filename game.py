@@ -43,18 +43,21 @@ spacing = 50
 buildings = [(i,j,blockSize,blockSize) for i in range(spacing,width,blockSize+spacing) for j in range(spacing,height,blockSize + spacing)]
 
 # buildings = [(10,10,40,40),(60,10,40,40),(10,60,40,40),(60,60,40,40)]
+
+map = []
 for building in buildings:
-    pygame.draw.rect(DISPLAYSURF,BLACK,building)
+    map.append(pygame.draw.rect(DISPLAYSURF,BLACK,building))
 
 # create a bunch of boids
-boids = [Boid((100+i*10,100+j*10),(0,0)) for i in range(7) for j in range(7)]
+# boids = [Boid((100+i*10,100+j*10),(0,0)) for i in range(7) for j in range(7)]
 # boids = [Boid((250,250),(0,0)), Boid((250,255),(0,0))]
+boids = [Boid((40,25),(0,0)) for i in range(5)]
 
-while True:#
-    rules.moveallboids(boids)
+while True:
+    rules.moveallboids(boids, map)
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
     pygame.display.update()
-    pygame.time.Clock().tick(60)
+    pygame.time.Clock().tick(1)
