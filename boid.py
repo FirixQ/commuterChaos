@@ -142,11 +142,11 @@ def collision(boid, map, velo):
 
 def scatter(allboids,thisboid):
     pushawaymul = -2
-    return (0,0) #vectormul(flock(allboids,thisboid),2*pushawaymul)
+    return vectormul(flock(allboids,thisboid),2*pushawaymul)
 
 
 def avoid(target,thisboid):
-    pushawaymul = -0.75
+    pushawaymul = -1
     return vectormul(converge(target,thisboid),pushawaymul)
 
 
