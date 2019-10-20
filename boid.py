@@ -1,4 +1,4 @@
-from math import sqrt,ceil
+from math import sqrt
 
 def moveallboids(allboids, map, mousepos = (-1,-1)):
 
@@ -11,7 +11,12 @@ def moveallboids(allboids, map, mousepos = (-1,-1)):
         vConverge = converge(target, boid)
         vBound = boundry(boid)
 
-        boidVelocity = vectoradd(boid.velocity , vFlock, vSpace, vSpeed, vConverge, vBound)
+        if mousepos != (-1,-1):
+            vMouse = mouseScatter(mousepos,boid,allboids)
+        else:
+            vMouse = [0,0]
+
+        boidVelocity = vectoradd(boid.velocity , vFlock, vSpace, vSpeed, vConverge, vBound,vMouse)
         boidVelocity = speedlimit(boidVelocity)
         boidVelocity = collision(boid, map, boidVelocity)
         boidPosition = vectoradd(boid.position,boid.velocity)
@@ -131,3 +136,17 @@ def collision(boid, map, velo):
             boid.position = (x, building.bottom - 3)
 
     return (vX,vY)
+
+def scatter(allboids,thisboid):
+    pushawaymul = -2
+    return (0,0) #vectormul(flock(allboids,thisboid),2*pushawaymul)
+
+
+def avoid(target,thisboid):
+    pushawaymul = -0.75
+    return vectormul(converge(target,thisboid),pushawaymul)
+
+
+
+def mouseScatter(mousepos, thisboid,allboids):
+    return(vectoradd(scatter(allboids,thisboid),avoid(mousepos,thisboid)))
