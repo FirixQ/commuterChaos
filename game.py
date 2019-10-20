@@ -58,9 +58,9 @@ boids = [Boid((40,25),(0,0)) for i in range(5)]
 while True:
     if mousecounter > 0:
         mousecounter -=1
-        rules.moveallboids(boids,buildings,mousepos=mouseposin)
+        rules.moveallboids(boids,map,mousepos=mouseposin)
     else:
-        rules.moveallboids(boids,buildings)
+        rules.moveallboids(boids,map)
 
     for event in pygame.event.get():
         if event.type == QUIT:

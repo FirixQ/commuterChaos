@@ -114,6 +114,9 @@ def boundry(boid):
 
 def collision(boid, map, velo):
 
+    # honestly idk what is going here. it is teleporting stuff about and i dont
+    # know why
+
     x = boid.position[0]
     y = boid.position[1]
 
